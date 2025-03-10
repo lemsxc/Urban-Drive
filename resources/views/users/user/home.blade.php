@@ -154,23 +154,28 @@
                                     <span class="text-sm">Air Conditioner</span>
                                 </div>
                             </div>
-
-                            <!-- View Details Button -->
-                            <button class="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium" @click="carModal = true; selectedCar = {
-                                    image: '{{ $car->image }}',
-                                    brand: '{{ $car->brand }}',
-                                    model: '{{ $car->model }}',
-                                    transmission: '{{ $car->transmission }}',
-                                    fuel_type: '{{ $car->fuel_type }}',
-                                    fuel_level: '{{ $car->fuel_level }}',
-                                    price: '{{ $car->rent_price }}',
-                                    category: '{{ $car->category }}',
-                                    platenum: '{{ $car->plate_number }}',
-                                    mileage: '{{ $car->mileage }}',
-                                    condition: '{{ $car->condition }}',
-                                    } ">
-                                View Details
-                            </button>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <!-- View Details Button -->
+                                <button class="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium"
+                                    @click="carModal = true; selectedCar = {
+                                            image: '{{ $car->image }}',
+                                            brand: '{{ $car->brand }}',
+                                            model: '{{ $car->model }}',
+                                            transmission: '{{ $car->transmission }}',
+                                            fuel_type: '{{ $car->fuel_type }}',
+                                            fuel_level: '{{ $car->fuel_level }}',
+                                            price: '{{ $car->rent_price }}',
+                                            category: '{{ $car->category }}',
+                                            platenum: '{{ $car->plate_number }}',
+                                            mileage: '{{ $car->mileage }}',
+                                            condition: '{{ $car->condition }}',
+                                            } ">
+                                    View Details
+                                </button>
+                                <button class="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium">
+                                    Rent Car
+                                </button>
+                            </div>
                         </div>
                     @endforeach
                 </div>
