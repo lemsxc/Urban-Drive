@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div x-data="{ carModal: false, selectedCategory: 'All', selectedCar: {}, }" class="flex flex-col items-center bg-white">
+    <div x-data="{ carModal: false, paymentModal: false, selectedCategory: 'All', selectedCar: {}, }" class="flex flex-col items-center bg-white">
         <div class="flex overflow-hidden flex-col w-full bg-white max-w-[1440px] max-md:p-5">
             @include('layouts.user-nav')
             <div class="flex justify-between px-20 py-8 text-center max-md:flex-col max-md:gap-10 max-md:items-center max-md:px-5 max-md:py-10">
@@ -85,7 +85,7 @@
                                         } ">
                                         View Details
                                     </button>
-                                    <button class="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium">
+                                    <button @click.prevent="paymentModal = true;" class="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium">
                                         Rent Car
                                     </button>
                                 </div>
@@ -98,6 +98,7 @@
         </div>
         
         @include('modals.carModal')
+        @include('modals.paymentModal')
 
         <!-- Footer Section -->
         <div class="flex flex-col items-center self-center px-20 pt-16 pb-10 w-full bg-white max-md:px-5">

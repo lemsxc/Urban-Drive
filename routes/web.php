@@ -8,6 +8,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\StripePaymentController;
+use Stripe\Stripe;
+use Stripe\Charge;
 
 Route::get('/', function () {
     return view('index');
@@ -26,6 +29,7 @@ Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('
 
 Route::get('/home', [PageController::class, 'home'])->name('home');
 Route::get('/car', [PageController::class, 'cars'])->name('cars');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/admin/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
 Route::get('/admin/cars/add', [PageController::class, 'addCars'])->name('addcars');
 Route::get('/admin/cars/list', [PageController::class, 'carlist'])->name('carlist');
@@ -36,6 +40,10 @@ Route::get('/admin/logs', [PageController::class, 'historylogs'])->name('history
 Route::get('/account/settings', [PageController::class, 'settings'])->name('settings');
 
 Route::post('/add/car', [CarController::class, 'addCar'])->name('add.cars');
+
+Route::post('/create-checkout-session', [StripePaymentController::class, 'createCheckoutSession'])->name('stripe.checkout');
+Route::get('/success', [StripePaymentController::class, 'success'])->name('stripe.success');
+Route::get('/cancel', [StripePaymentController::class, 'cancel'])->name('stripe.cancel');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -48,6 +56,26 @@ Route::middleware(['auth', 'verified', 'role:User'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
 
 });
+
+Route::get('/payment', function () {
+    return view('payment');
+})->name('payment');
+
+Route::post('/payment/process', function (Request $request) {
+    Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    try {
+        Charge::create([
+            "amount" => $request->amount,
+            "currency" => "usd",
+            "source" => $request->stripeToken,
+            "description" => "Car Rental Payment - Toyota Corolla"
+        ]);
+        return response()->json(["message" => "Payment Successful"]);
+    } catch (\Exception $e) {
+        return response()->json(["message" => $e->getMessage()], 500);
+    }
+})->name('payment.process');
 
 Route::get('/file/{filename}', [FileController::class, 'showFile'])
     ->where('filename', '.*')

@@ -26,7 +26,7 @@ class PageController extends Controller
     public function home()
     {
         $cars = Car::all();
-        return view('users.user.home',compact('cars'));
+        return view('users.user.home', compact('cars'));
     }
 
     public function dashboard()
@@ -64,6 +64,17 @@ class PageController extends Controller
     {
         return view('users.admin.logs');
     }
+
+    public function contact()
+    {
+        return view('users.user.contactus');
+    }
+
+    public function payment()
+    {
+        return view('users.user.payment');
+    }
+
 
     public function carlist()
     {
