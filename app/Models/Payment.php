@@ -15,7 +15,7 @@ class Payment extends Model
     // The attributes that are mass assignable.
     protected $fillable = [
         'reservation_id',
-        'rating',
+        'amount',
         'payment_method',
         'payment_date',
         'status',

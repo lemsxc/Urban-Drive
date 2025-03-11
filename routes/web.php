@@ -9,11 +9,17 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\StripePaymentController;
+use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Charge;
 
 Route::get('/', function () {
-    return view('index');
+    // Check if the user is authenticated
+    if (Auth::check()) {
+        return redirect()->route('home'); // Redirect to home page if authenticated
+    } else {
+        return view('auth.login'); // Show login page if not authenticated
+    }
 });
 
 // Registration Routes
@@ -27,35 +33,29 @@ Route::post('/login', [AuthenticatedSessionController::class, 'check'])->name('l
 // Logout Route
 Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-Route::get('/home', [PageController::class, 'home'])->name('home');
-Route::get('/car', [PageController::class, 'cars'])->name('cars');
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::get('/payment', [PageController::class, 'payment'])->name('payment');
-Route::get('/admin/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
-Route::get('/admin/cars/add', [PageController::class, 'addCars'])->name('addcars');
-Route::get('/admin/cars/list', [PageController::class, 'carlist'])->name('carlist');
-Route::get('/admin/rentals', [PageController::class, 'rental'])->name('rentals');
-Route::get('/admin/drivers/list', [PageController::class, 'driverlist'])->name('driverlist');
-Route::get('/admin/drivers/add', [PageController::class, 'addDriver'])->name('addDrivers');
-Route::get('/admin/logs', [PageController::class, 'historylogs'])->name('historylogs');
-Route::get('/account/settings', [PageController::class, 'settings'])->name('settings');
-
-Route::post('/add/car', [CarController::class, 'addCar'])->name('add.cars');
-
-Route::post('/checkout/session', [StripePaymentController::class, 'createCheckoutSession'])->name('checkout.session');
-Route::get('/checkout/success', [StripePaymentController::class, 'success'])->name('stripe.success');
-Route::get('/checkout/cancel', [StripePaymentController::class, 'cancel'])->name('stripe.cancel');
-
 Route::middleware(['auth'])->group(function () {
-
+    Route::get('/account/settings', [PageController::class, 'settings'])->name('settings');
+    Route::post('/create-checkout-session', [StripePaymentController::class, 'createCheckoutSession'])->name('stripe.checkout');
+    Route::get('/success', [StripePaymentController::class, 'success'])->name('stripe.success');
+    Route::get('/cancel', [StripePaymentController::class, 'cancel'])->name('stripe.cancel');
 });
 
 Route::middleware(['auth', 'verified', 'role:User'])->group(function () {
-
+    Route::get('/home', [PageController::class, 'home'])->name('home');
+    Route::get('/car', [PageController::class, 'cars'])->name('cars');
+    Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+    Route::get('/payment', [PageController::class, 'payment'])->name('payment');
+    Route::post('/add/car', [CarController::class, 'addCar'])->name('add.cars');
 });
 
 Route::middleware(['auth', 'verified', 'role:Admin'])->group(function () {
-
+    Route::get('/admin/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin/cars/add', [PageController::class, 'addCars'])->name('addcars');
+    Route::get('/admin/cars/list', [PageController::class, 'carlist'])->name('carlist');
+    Route::get('/admin/rentals', [PageController::class, 'rental'])->name('rentals');
+    Route::get('/admin/drivers/list', [PageController::class, 'driverlist'])->name('driverlist');
+    Route::get('/admin/drivers/add', [PageController::class, 'addDriver'])->name('addDrivers');
+    Route::get('/admin/logs', [PageController::class, 'historylogs'])->name('historylogs');
 });
 
 

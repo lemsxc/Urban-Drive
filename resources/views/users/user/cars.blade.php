@@ -98,6 +98,7 @@
         </div>
         
         @include('modals.carModal')
+        @include('modals.paymentModal')
 
         <!-- Footer Section -->
         <div class="flex flex-col items-center self-center px-20 pt-16 pb-10 w-full bg-white max-md:px-5">

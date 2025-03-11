@@ -36,7 +36,7 @@ class PageController extends Controller
 
     public function cars()
     {
-        $cars = Car::all();
+        $cars = Car::where('status', '=', 'Available')->get();
         return view('users.user.cars', compact('cars'));
     }
 
