@@ -332,7 +332,6 @@
             </div>
         </div>
         @include('modals.carModal')
-        @include('modals.paymentModal')
     </div>
     <script>
         var swiper = new Swiper(".mySwiper", {

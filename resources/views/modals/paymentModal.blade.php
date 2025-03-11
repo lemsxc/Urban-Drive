@@ -18,32 +18,3 @@
         </div>
     </div>
 </div>
-
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    const stripe = Stripe("{{ env('STRIPE_KEY') }}");
-
-    document.getElementById("checkout-button").addEventListener("click", async () => {
-        const carName = document.getElementById("car_name").innerText;
-        const carDescription = document.getElementById("car_description").innerText;
-        const carPrice = document.getElementById("car_price").innerText;
-        const carImage = "https://via.placeholder.com/300"; // Replace with actual image URL
-
-        const response = await fetch("{{ route('stripe.checkout') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify({
-                car_name: carName,
-                car_description: carDescription,
-                amount: carPrice,
-                car_image: carImage
-            }),
-        });
-
-        const session = await response.json();
-        stripe.redirectToCheckout({ sessionId: session.id });
-    });
-</script>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use App\Models\Payment;
+use App\Models\Reservation;
+use Carbon\Carbon;
 
 class StripePaymentController extends Controller
 {
@@ -27,20 +30,43 @@ class StripePaymentController extends Controller
                 ]
             ],
             'mode' => 'payment',
-            'success_url' => route('stripe.success'),
+            'success_url' => route('stripe.success', ['session_id' => '{CHECKOUT_SESSION_ID}']),
             'cancel_url' => route('stripe.cancel'),
+            'metadata' => [
+                'reservation_id' => $request->reservation_id, // Store reservation ID
+            ]
         ]);
 
         return response()->json(['id' => $checkoutSession->id]);
     }
 
-    public function success()
+    public function success(Request $request)
     {
-        return view('payment.success');
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        // Retrieve session data from Stripe
+        $session = Session::retrieve($request->session_id);
+
+        if (!$session) {
+            return redirect()->route('checkout')->with('error', 'Payment failed.');
+        }
+
+        // Retrieve metadata
+        $reservationId = $session->metadata->reservation_id ?? null;
+
+        // Store payment details in database
+        $payment = Payment::create([
+            'reservation_id' => $reservationId,
+            'payment_method' => 'Stripe',
+            'payment_date' => Carbon::now(),
+            'status' => 'Paid',
+        ]);
+
+        return redirect()->route('payment.success')->with('success', 'Payment successful!');
     }
 
     public function cancel()
     {
-        return view('payment.cancel');
+        return redirect()->route('checkout')->with('error', 'Payment was canceled.');
     }
 }
