@@ -6,7 +6,7 @@
             <button @click="carModal = false" class="text-gray-500 hover:text-gray-800">&times;</button>
         </div>
 
-        <img :src="selectedCar ? selectedCar.image : ''" class="rounded-lg mx-auto w-11/12 h-72" alt="Car Image">
+        <img :src="selectedCar" class="rounded-lg mx-auto w-11/12 h-72" alt="Car Image">
 
         <!-- Technical Specifications -->
         <div class="mt-6">

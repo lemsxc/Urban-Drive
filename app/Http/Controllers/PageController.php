@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Car;
 
@@ -47,7 +48,8 @@ class PageController extends Controller
 
     public function rental()
     {
-        return view('users.admin.rentals');
+        $cars = Reservation::with('car')->get();
+        return view('users.admin.rentals', compact('cars'));
     }
 
     public function addDriver()

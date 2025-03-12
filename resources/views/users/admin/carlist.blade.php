@@ -45,54 +45,55 @@
                                 </div>
                             </header>
                         </div>
-
-                        <section
-                            class="flex flex-col justify-center pb-5 mt-10 w-full text-sm bg-white rounded-lg text-teal-950 max-w-screen-xl mx-auto">
-                            <div class="overflow-x-auto"> <!-- Enables horizontal scrolling if the table overflows -->
-                                <table class="min-w-full text-left">
-                                    <thead class="w-full text-left">
-                                        <tr>
-                                            <th class="py-3 px-4">ID</th>
-                                            <th class="py-3 px-4">Brand</th>
-                                            <th class="py-3 px-4">Model</th>
-                                            <th class="py-3 px-4">Category</th>
-                                            <th class="py-3 px-4">Plate Number</th>
-                                            <th class="py-3 px-4">Mileage</th>
-                                            <th class="py-3 px-4">Rent Price</th>
-                                            <th class="py-3 px-4">Fuel Level</th>
-                                            <th class="py-3 px-4">Condition</th>
-                                            <th class="py-3 px-4">Status</th>
-                                            <th class="py-3 px-4">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="carTableBody">
-                                        @foreach($cars as $car)
-                                            <tr class="border-b border-slate-200 car-item">
-                                                <td class="py-3 px-4">{{ $car->id }}</td>
-                                                <td class="py-3 px-4">{{ $car->brand }}</td>
-                                                <td class="py-3 px-4">{{ $car->model }}</td>
-                                                <td class="py-3 px-4">{{ $car->category }}</td>
-                                                <td class="py-3 px-4">{{ $car->plate_number }}</td>
-                                                <td class="py-3 px-4">{{ $car->mileage }}</td>
-                                                <td class="py-3 px-4">{{ $car->rent_price }}</td>
-                                                <td class="py-3 px-4">{{ $car->fuel_level }}</td>
-                                                <td class="py-3 px-4">{{ $car->condition }}</td>
-                                                <td class="py-3 px-4">{{ $car->status }}</td>
-                                                <td class="py-3 px-4">
-                                                    <button
-                                                        class="text-xs font-medium text-center text-white bg-indigo-600 rounded-sm py-1 px-2">View</button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
-
                     </div>
+
+                    <section
+                        class="flex flex-col justify-center pb-5 mt-10 w-full text-sm bg-white rounded-lg text-teal-950 max-w-screen-xl mx-auto">
+                        <div class="overflow-x-auto"> <!-- Enables horizontal scrolling if the table overflows -->
+                            <table class="min-w-full text-left">
+                                <thead class="w-full text-left">
+                                    <tr>
+                                        <th class="py-3 px-4">ID</th>
+                                        <th class="py-3 px-4">Brand</th>
+                                        <th class="py-3 px-4">Model</th>
+                                        <th class="py-3 px-4">Category</th>
+                                        <th class="py-3 px-4">Plate Number</th>
+                                        <th class="py-3 px-4">Mileage</th>
+                                        <th class="py-3 px-4">Rent Price</th>
+                                        <th class="py-3 px-4">Fuel Level</th>
+                                        <th class="py-3 px-4">Condition</th>
+                                        <th class="py-3 px-4">Status</th>
+                                        <th class="py-3 px-4">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="carTableBody">
+                                    @foreach($cars as $car)
+                                        <tr class="border-b border-slate-200 car-item">
+                                            <td class="py-3 px-4">{{ $car->id }}</td>
+                                            <td class="py-3 px-4">{{ $car->brand }}</td>
+                                            <td class="py-3 px-4">{{ $car->model }}</td>
+                                            <td class="py-3 px-4">{{ $car->category }}</td>
+                                            <td class="py-3 px-4">{{ $car->plate_number }}</td>
+                                            <td class="py-3 px-4">{{ $car->mileage }}</td>
+                                            <td class="py-3 px-4">{{ $car->rent_price }}</td>
+                                            <td class="py-3 px-4">{{ $car->fuel_level }}</td>
+                                            <td class="py-3 px-4">{{ $car->condition }}</td>
+                                            <td class="py-3 px-4">{{ $car->status }}</td>
+                                            <td class="py-3 px-4">
+                                                <button
+                                                    class="text-xs font-medium text-center text-white bg-indigo-600 rounded-sm py-1 px-2">View</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script>

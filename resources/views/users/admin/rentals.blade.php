@@ -34,81 +34,57 @@
                                 </div>
                             </div>
                         </header>
-
-                        <!-- Transactions Table -->
-                        <section
-                            class="flex flex-col justify-center pb-5 mt-10 w-full text-sm bg-white rounded-lg text-neutral-950 max-md:max-w-full">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <!-- Table Header -->
-                                <thead>
-                                    <tr class="bg-slate-200 border-b border-slate-300">
-                                        <th class="py-3 px-4">Trip
-                                            ID</th>
-                                        <th class="py-3 px-4">
-                                            Vehicle Type</th>
-                                        <th class="py-3 px-4">
-                                            Vehicle Number</th>
-                                        <th class="py-3 px-4">Trip
-                                            Date</th>
-                                        <th class="py-3 px-4">Trip
-                                            Time</th>
-                                        <th class="py-3 px-4">
-                                            Destination</th>
-                                        <th class="py-3 px-4">
-                                            Status</th>
-                                        <th class="py-3 px-4">
-                                            Action</th>
-                                    </tr>
-                                </thead>
-
-                                <!-- Table Rows -->
-                                <tbody id="transactionTableBody">
-                                    <tr class="border-b border-slate-300 transaction-item">
-                                        <td class="py-3 px-4">#SZ15E0010</td>
-                                        <td class="py-3 px-4">Car</td>
-                                        <td class="py-3 px-4">FC 323 MT</td>
-                                        <td class="py-3 px-4">28-12-2023</td>
-                                        <td class="px-8 py-4 text-center">4:45pm</td>
-                                        <td class="py-3 px-4">Al-Salhiyah
-                                        </td>
-                                        <td class="py-3 px-4">Confirm</td>
-                                        <td class="px-8 py-4 text-center">
-                                            <button
-                                                class="text-xs font-medium text-white bg-indigo-600 rounded-sm min-h-[21px] w-[50px]">View</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b border-slate-300 transaction-item">
-                                        <td class="py-3 px-4">#SZ15E0011</td>
-                                        <td class="py-3 px-4">Car</td>
-                                        <td class="py-3 px-4">BP 909 NC</td>
-                                        <td class="py-3 px-4">6-4-2023</td>
-                                        <td class="px-8 py-4 text-center">5:19pm</td>
-                                        <td class="py-3 px-4">Salah Al-Din
-                                        </td>
-                                        <td class="py-3 px-4">Confirm</td>
-                                        <td class="px-8 py-4 text-center">
-                                            <button
-                                                class="text-xs font-medium text-white bg-indigo-600 rounded-sm min-h-[21px] w-[50px]">View</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-b border-slate-300 transaction-item">
-                                        <td class="py-3 px-4">#SZ15E0153</td>
-                                        <td class="py-3 px-4">Microbus</td>
-                                        <td class="py-3 px-4">N/A</td>
-                                        <td class="py-3 px-4">21-3-2023</td>
-                                        <td class="px-8 py-4 text-center">7:55am</td>
-                                        <td class="py-3 px-4">Al-Rimal</td>
-                                        <td class="py-3 px-4">Pending</td>
-                                        <td class="px-8 py-4 text-center">
-                                            <button
-                                                class="text-xs font-medium text-white bg-indigo-600 rounded-sm min-h-[21px] w-[50px]">View</button>
-                                        </td>
-                                    </tr>
-                                    <!-- More rows go here -->
-                                </tbody>
-                            </table>
-                        </section>
                     </div>
+
+
+                    <!-- Transactions Table -->
+                    <section
+                        class="flex flex-col justify-center pb-5 mt-10 w-full text-sm bg-white rounded-lg text-neutral-950 max-md:max-w-full">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <!-- Table Header -->
+                            <thead>
+                                <tr class="bg-slate-200 border-b border-slate-300">
+                                    <th class="py-3 px-4 text-center">Trip ID</th>
+                                    <th class="py-3 px-4 text-center">Vehicle Type</th>
+                                    <th class="py-3 px-4 text-center">Brand</th>
+                                    <th class="py-3 px-4 text-center">Model</th>
+                                    <th class="py-3 px-4 text-center">Plate Number</th>
+                                    <th class="py-3 px-4 text-center">Start Date</th>
+                                    <th class="py-3 px-4 text-center">End Date</th>
+                                    <th class="py-3 px-4 text-center">Status</th>
+                                    <th class="py-3 px-4 text-center">Action</th>
+                                </tr>
+                            </thead>
+
+                            <!-- Table Rows -->
+                            <tbody id="transactionTableBody">
+                                @foreach($cars as $reservation)
+                                    <tr class="border-b border-slate-300 transaction-item">
+                                        <td class="py-3 px-4 text-center">{{ $reservation->id }}</td>
+                                        <td class="py-3 px-4 text-center">{{ $reservation->car->category ?? 'N/A' }}
+                                        </td>
+                                        <td class="py-3 px-4 text-center">{{ $reservation->car->brand ?? 'N/A' }}</td>
+                                        <td class="py-3 px-4 text-center">{{ $reservation->car->model ?? 'N/A' }}</td>
+                                        <td class="py-3 px-4 text-center">{{ $reservation->car->plate_number ?? 'N/A' }}
+                                        </td>
+                                        <td class="py-3 px-4 text-center">
+                                            {{ \Carbon\Carbon::parse($reservation->start_date)->format('d-m-Y') }}
+                                        </td>
+                                        <td class="py-3 px-4 text-center">
+                                            {{ \Carbon\Carbon::parse($reservation->end_date)->format('d-m-Y') }}
+                                        </td>
+                                        <td class="py-3 px-4 text-center">{{ ucfirst($reservation->status) }}</td>
+                                        <td class="px-8 py-4 text-center">
+                                            <button
+                                                class="text-xs font-medium text-white bg-indigo-600 rounded-sm min-h-[21px] w-[50px]">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </section>
                 </div>
             </div>
         </div>
