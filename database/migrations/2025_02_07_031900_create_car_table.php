@@ -16,9 +16,11 @@ return new class extends Migration
             $table->string('brand');
             $table->string('model');
             $table->string('category');
+            $table->string('transmission');
             $table->string('plate_number')->unique();
             $table->string('mileage');
             $table->string('rent_price');
+            $table->string('fuel_type');
             $table->string('fuel_level');
             $table->string('condition');
             $table->string('image');

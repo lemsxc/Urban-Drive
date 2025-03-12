@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('reservation_id');
-            $table->double('rating');
+            $table->double('amount');
             $table->string('payment_method');
             $table->timestamp('payment_date')->nullable();
             $table->string('status');
